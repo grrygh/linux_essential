@@ -13,6 +13,9 @@ set wildmenu
 " Set minimal number of screen lines to keep above and below the cursor.
 set scrolloff=5
 
+" Disable highlight search.
+set noshlsearch
+
 " While typing a search command, show where the pattern,
 set incsearch
 
