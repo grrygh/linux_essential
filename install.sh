@@ -1,6 +1,8 @@
 #! /bin/bash
 
 ls ~/.vimrc &> /dev/null
+
+# Check if .vimrc file is already there, then delete it.
 if [[ $? -eq 0 ]]
 then
   rm ~/.vimrc
