@@ -14,7 +14,7 @@ set wildmenu
 set scrolloff=5
 
 " Disable highlight search.
-set noshlsearch
+set nohlsearch
 
 " While typing a search command, show where the pattern,
 set incsearch
