@@ -1,3 +1,3 @@
 #! /bin/bash
 
-wget -c https://raw.githubusercontent.com/grrygh/linux_essential/master/.vimrc -P ~/
+wget -0 https://raw.githubusercontent.com/grrygh/linux_essential/master/.vimrc -P ~/
