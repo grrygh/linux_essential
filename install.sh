@@ -5,4 +5,4 @@ if [[ $? -eq 0 ]]
 then
   rm ~/.vimrc
 fi
-wget -O https://raw.githubusercontent.com/grrygh/linux_essential/master/.vimrc -P ~/
+wget https://raw.githubusercontent.com/grrygh/linux_essential/master/.vimrc -P ~/
