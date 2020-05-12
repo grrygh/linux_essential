@@ -34,6 +34,11 @@ set autoindent
 " Enable smart indent.
 set smartindent
 
+" Converting tabs to spaces.
+set expandtab
+set tabstop=2
+set shiftwidth=2
+
 " Indicate dark backgroung.
 set background=dark
 
