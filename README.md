@@ -1,3 +1,3 @@
 # linux_essential
 
-Essential configuration for linux
+Essential configuration for raspbian OS.
