@@ -8,6 +8,9 @@ if [[ $? -ne 0 ]]
 then
   echo 'Installing VIM...'
   sudo apt-get install -y vim
+else
+  echo 'Check for VIM update...'
+  sudo apt-get update && sudo apt-get install --only-upgrade vim
 fi
 
 # Set default editor to VIM.
