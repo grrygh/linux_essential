@@ -34,6 +34,6 @@ then
   rm ~/.vimrc
 fi
 
-wget https://raw.githubusercontent.com/grrygh/linux_essential/master/.vimrc -P ~/
+wget https://raw.githubusercontent.com/grrygh/linux_essential/master/.vimrc -P /home/pi/
 
 exit 0
