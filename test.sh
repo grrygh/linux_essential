@@ -7,7 +7,7 @@ usage() {
   echo 'Linux essential installation'
   echo '  -v  Install latest VIM & setup .vimrc'
   echo '  -d  Check if docker is install.'
-  echo '*If curling from github, do add | bash -s -- [-vd]
+  echo '*If curling from github, do add | bash -s -- [-vd]'
   exit 1
 }
 
