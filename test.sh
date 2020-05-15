@@ -10,13 +10,6 @@ usage() {
   exit 1
 }
 
-# Check for root access
-if [[ "${UID}" -ne 0 ]]
-then
-  echo 'Please run the script as root or sudo.' >&2
-  exit 1
-fi
-
 # Parse the options
 while getopts vd OPTION
 do
@@ -37,6 +30,30 @@ fi
 if [[ "${VIM}" = 'true' ]]
 then
   echo 'Display from VIM section.'
+  which vim
+  if [[ $? -ne 0 ]]
+  then
+    echo 'Installing VIM...'
+    apt-get install -y vim
+  else
+    echo 'Check for VIM update...'
+    apt-get update && sudo apt-get install --only-upgrade vim
+  fi
+  
+  # Set default editor to VIM.
+  if [[ -z "${EDITOR}" ]]
+  then
+    export EDITOR=vim
+    echo 'export EDITOR=vim' >> ~/.bashrc
+  fi
+
+  # Check if .vimrc file is already there, then delete it.
+  ls ~/.vimrc &> /dev/null
+  if [[ $? -eq 0 ]]
+  then
+    rm ~/.vimrc
+  fi
+  wget https://raw.githubusercontent.com/grrygh/linux_essential/master/.vimrc -P ~/
 fi
 
 # Check if Docker is install & update.
