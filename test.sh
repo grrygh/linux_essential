@@ -34,7 +34,7 @@ then
   if [[ $? -ne 0 ]]
   then
     echo 'Installing VIM...'
-    apt-get install -y vim
+    sudo apt-get install -y vim
   else
     echo 'Check for VIM update...'
     sudo apt-get update && sudo apt-get install --only-upgrade vim
