@@ -37,7 +37,7 @@ then
     apt-get install -y vim
   else
     echo 'Check for VIM update...'
-    apt-get update && sudo apt-get install --only-upgrade vim
+    sudo apt-get update && sudo apt-get install --only-upgrade vim
   fi
   
   # Set default editor to VIM.
