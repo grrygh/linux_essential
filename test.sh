@@ -75,7 +75,7 @@ then
     sudo apt-get install libffi-dev libssl-dev -o Acquire::ForceIPv4=true
     sudo apt install python3-dev -o Acquire::ForceIPv4=true
     sudo apt-get install -y python3 python3-pip -o Acquire::ForceIPv4=true
-    sudo pip3 install docker-compose -o Acquire::ForceIPv4=true
+    sudo pip3 install docker-compose
   else
     echo 'Docker is already installed.'
   fi
