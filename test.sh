@@ -97,4 +97,5 @@ then
       sh pihole_gravity.sh
     fi
   fi
+fi
 exit 0
