@@ -94,7 +94,6 @@ then
       wget https://raw.githubusercontent.com/grrygh/linux_essential/master/pihole.yml -P ~/
       docker-compose -f pihole.yml up -d pihole # Start pihole container.
       wget https://raw.githubusercontent.com/grrygh/linux_essential/master/pihole_gravity.sh -P ~/
-      sh pihole_gravity.sh
     fi
   fi
 fi
