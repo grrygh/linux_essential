@@ -13,7 +13,7 @@ usage() {
 }
 
 # Parse the options
-while getopts vd OPTION
+while getopts vdp OPTION
 do
   case ${OPTION} in
     v) VIM='true' ;;
