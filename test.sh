@@ -72,10 +72,10 @@ then
     sudo sh get-docker.sh
     sudo usermod -aG docker pi # Add pi to Docker group.
     # Install Docker compose.
-    sudo apt-get install libffi-dev libssl-dev Acquire::ForceIPv4=true
-    sudo apt install python3-dev Acquire::ForceIPv4=true
-    sudo apt-get install -y python3 python3-pip Acquire::ForceIPv4=true
-    sudo pip3 install docker-compose Acquire::ForceIPv4=true
+    sudo apt-get install libffi-dev libssl-dev -o Acquire::ForceIPv4=true
+    sudo apt install python3-dev -o Acquire::ForceIPv4=true
+    sudo apt-get install -y python3 python3-pip -o Acquire::ForceIPv4=true
+    sudo pip3 install docker-compose -o Acquire::ForceIPv4=true
   else
     echo 'Docker is already installed.'
   fi
