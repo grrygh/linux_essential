@@ -81,4 +81,13 @@ then
   fi
 fi
 
+# Install pihole docker.
+if [[ "${PIHOLE}" -eq 'true' ]]
+then
+  # Check for pihole container.
+  docker container ls | grep pihole
+  if [[ $? -ne 0 ]]
+  then
+    
+
 exit 0
