@@ -88,6 +88,9 @@ then
   docker container ls | grep pihole
   if [[ $? -ne 0 ]]
   then
-    
+    ls ~/docker-compose.yml &> /dev/null # Check for docker-compose.yml file.
+    if [[ $? -eq 0 ]] # If not available.
+    then 
+      wget https://raw.githubusercontent.com/grrygh/linux_essential/master/pihole.yml -P ~/
 
 exit 0
