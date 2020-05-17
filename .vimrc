@@ -7,6 +7,9 @@ set ruler
 " Show incomplete commands.
 set showcmd
 
+" Enable Syntax Highlighting
+syntax on
+
 " Shows a menu when using tab completion.
 set wildmenu
 
