@@ -3,12 +3,13 @@
 usage() {
   # Display the usage and exit.
   echo
-  echo "Usage: ${0} [-vdp]"
+  echo "Usage: ${0} [-vdpw]"
   echo 'Linux essential installation'
   echo '  -v  Install VIM application & setup .vimrc'
   echo '  -d  Install Docker application.'
-  echo '  -p Install pihole docker.'
-  echo '*If curling from github, add | bash -s -- [-vd]'
+  echo '  -p  Install pihole docker.'
+  echo '  -w  Install wireguard docker.'
+  echo '*If curling from github, add | bash -s -- [-vdpw]'
   exit 1
 }
 
@@ -19,6 +20,7 @@ do
     v) VIM='true' ;;
     d) DOCKER='true' ;;
     p) PIHOLE='true' ;;
+    w) WIREGUARD='true' ;;
     ?) usage ;;
   esac
 done
@@ -94,6 +96,22 @@ then
       wget https://raw.githubusercontent.com/grrygh/linux_essential/master/pihole.yml -P ~/
       docker-compose -f pihole.yml up -d pihole # Start pihole container.
       wget https://raw.githubusercontent.com/grrygh/linux_essential/master/pihole_gravity.sh -P ~/
+    fi
+  fi
+fi
+
+# Install wireguard docker.
+if [[ "${WIREGUARD}" -eq 'true' ]]
+then
+  # Check for wireguard container.
+  docker container ls | grep wireguard
+  if [[ $? -ne 0 ]] # If container is missing.
+  then
+    ls ~/wireguard.yml &> /dev/null # Check for pihole.yml file.
+    if [[ $? -ne 0 ]] # If pihole.yml is missing.
+    then
+      wget https://raw.githubusercontent.com/grrygh/linux_essential/master/wireguard.yml -P ~/
+      docker-compose -f wireguard.yml up -d wireguard # Start pihole container.
     fi
   fi
 fi
