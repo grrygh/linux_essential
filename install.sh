@@ -1,5 +1,7 @@
 #! /bin/bash
 
+# Version 2.0
+
 usage() {
   # Display the usage and exit.
   echo
