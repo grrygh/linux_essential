@@ -1,6 +1,6 @@
 #! /bin/bash
 
-# Version 2.0
+# Version 2.1
 
 usage() {
   # Display the usage and exit.
@@ -89,7 +89,7 @@ fi
 if [[ "${PIHOLE}" -eq 'true' ]]
 then
   # Check for pihole container.
-  docker container ls | grep pihole
+  docker container ls | grep pihole &> /dev/null
   if [[ $? -ne 0 ]] # If container is missing.
   then
     ls ~/pihole.yml &> /dev/null # Check for pihole.yml file.
@@ -99,6 +99,8 @@ then
       docker-compose -f pihole.yml up -d pihole # Start pihole container.
       wget https://raw.githubusercontent.com/grrygh/linux_essential/master/pihole_gravity.sh -P ~/
     fi
+  else
+    echo 'Pihole container is already implemented.'
   fi
 fi
 
