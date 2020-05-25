@@ -107,11 +107,11 @@ then
   docker container ls | grep wireguard
   if [[ $? -ne 0 ]] # If container is missing.
   then
-    ls ~/wireguard.yml &> /dev/null # Check for pihole.yml file.
-    if [[ $? -ne 0 ]] # If pihole.yml is missing.
+    ls ~/wireguard.yml &> /dev/null # Check for wireguard.yml file.
+    if [[ $? -ne 0 ]] # If wireguard.yml is missing.
     then
       wget https://raw.githubusercontent.com/grrygh/linux_essential/master/wireguard.yml -P ~/
-      docker-compose -f wireguard.yml up -d wireguard # Start pihole container.
+      docker-compose -f wireguard.yml up -d wireguard # Start wireguard container.
     fi
   fi
 fi
