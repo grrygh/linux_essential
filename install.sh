@@ -92,7 +92,6 @@ then
   then
     echo 'Pihole container is not installed...'
     ls ~/pihole.yml &> /dev/null # Check for pihole.yml file.
-    echo 'Check if pihole.yml is there...'
     if [[ $? -eq 0 ]] # If pihole.yml is missing.
     then
       echo 'pihole.yml is missing, copying now...'
