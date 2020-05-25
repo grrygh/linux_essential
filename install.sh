@@ -82,14 +82,15 @@ then
 fi
 
 # Install pihole docker.
+echo 'check if pihole is installed...'
 if [[ "${PIHOLE}" -eq 'true' ]]
 then
   # Check for pihole container.
   docker container ls | grep pihole
-  echo 'Checking if pihole is installed...'
+  echo 'Checking if pihole container is installed...'
   if [[ $? -ne 0 ]] # If container is missing.
   then
-    echo 'Pihole is not installed...'
+    echo 'Pihole container is not installed...'
     ls ~/pihole.yml &> /dev/null # Check for pihole.yml file.
     echo 'Check if pihole.yml is there...'
     if [[ $? -eq 0 ]] # If pihole.yml is missing.
