@@ -86,8 +86,8 @@ echo 'check if pihole is installed...'
 if [[ "${PIHOLE}" -eq 'true' ]]
 then
   # Check for pihole container.
-  docker container ls | grep pihole
   echo 'Checking if pihole container is installed...'
+  docker container ls | grep pihole
   if [[ $? -ne 0 ]] # If container is missing.
   then
     echo 'Pihole container is not installed...'
