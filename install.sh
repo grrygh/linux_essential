@@ -7,7 +7,7 @@ usage() {
   echo 'Linux essential installation'
   echo '  -v  Install VIM application & setup .vimrc'
   echo '  -d  Install Docker application.'
-  echo '  -p. Install pihole docker.'
+  echo '  -p Install pihole docker.'
   echo '*If curling from github, add | bash -s -- [-vd]'
   exit 1
 }
