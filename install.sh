@@ -100,7 +100,7 @@ then
       wget https://raw.githubusercontent.com/grrygh/linux_essential/master/pihole_gravity.sh -P ~/
     fi
   else
-    echo 'Pihole container is already implemented.'
+    echo 'Pihole container is implemented.'
   fi
 fi
 
@@ -108,7 +108,7 @@ fi
 if [[ "${WIREGUARD}" -eq 'true' ]]
 then
   # Check for wireguard container.
-  docker container ls | grep wireguard
+  docker container ls | grep wireguard &> /dev/null
   if [[ $? -ne 0 ]] # If container is missing.
   then
     ls ~/wireguard.yml &> /dev/null # Check for wireguard.yml file.
@@ -117,6 +117,8 @@ then
       wget https://raw.githubusercontent.com/grrygh/linux_essential/master/wireguard.yml -P ~/
       docker-compose -f wireguard.yml up -d wireguard # Start wireguard container.
     fi
+  else
+    echo 'Wireguard container is implemented.'
   fi
 fi
 exit 0
