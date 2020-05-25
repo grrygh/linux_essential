@@ -97,6 +97,8 @@ then
       docker-compose -f pihole.yml up -d pihole # Start pihole container.
       wget https://raw.githubusercontent.com/grrygh/linux_essential/master/pihole_gravity.sh -P ~/
     fi
+  else
+    echo 'pihole container is running'
   fi
 fi
 
