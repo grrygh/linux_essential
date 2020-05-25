@@ -86,11 +86,15 @@ if [[ "${PIHOLE}" -eq 'true' ]]
 then
   # Check for pihole container.
   docker container ls | grep pihole
+  echo 'Checking if pihole is installed...'
   if [[ $? -ne 0 ]] # If container is missing.
   then
-    ls ~/docker-compose.yml &> /dev/null # Check for pihole.yml file.
+    echo 'Pihole is not installed...'
+    ls ~/pihole.yml &> /dev/null # Check for pihole.yml file.
+    echo 'Check if pihole.yml is there...'
     if [[ $? -eq 0 ]] # If pihole.yml is missing.
-    then 
+    then
+      echo 'pihole.yml is missing, copying now...'
       wget https://raw.githubusercontent.com/grrygh/linux_essential/master/pihole.yml -P ~/
       docker-compose -f pihole.yml up -d pihole # Start pihole container.
       wget https://raw.githubusercontent.com/grrygh/linux_essential/master/pihole_gravity.sh -P ~/
