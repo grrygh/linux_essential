@@ -101,6 +101,7 @@ then
     fi
   else
     echo 'Pihole container is implemented.'
+    exit 1
   fi
 fi
 
@@ -119,6 +120,7 @@ then
     fi
   else
     echo 'Wireguard container is implemented.'
+    exit 1
   fi
 fi
 exit 0
