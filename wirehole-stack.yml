@@ -26,8 +26,12 @@ services:
     #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
     cap_add:
       - NET_ADMIN
-    restart_policy:
-        condition: unless-stopped
+    deploy:
+        replicas: 2
+        update_config:
+            parallelism: 2
+        restart_policy:
+            condition: unless-stopped
 
     wireguard:
         image: linuxserver/wireguard
@@ -50,8 +54,12 @@ services:
           - 51820:51820/udp
         sysctls:
           - net.ipv4.conf.all.src_valid_mark=1
-        restart_policy:
-            condition: unless-stopped
+        deploy:
+            replicas: 2
+            update_config:
+                parallelism: 2
+            restart_policy:
+                condition: unless-stopped
 
     visualizer:
         image: dockersamples/visualizer
