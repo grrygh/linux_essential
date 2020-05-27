@@ -1,0 +1,65 @@
+version: "3.8"
+
+services:
+  pihole:
+    image: pihole/pihole:latest
+    hostname: docker-pihole
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "67:67/udp"
+      - "80:80/tcp"
+      - "443:443/tcp"
+    environment:
+      TZ: 'Asia/Singapore'
+      # WEBPASSWORD: 'set a secure password here or it will be random'
+      DNS1: 1.1.1.1
+      DNS2: 1.0.0.1
+    # Volumes store your data between container upgrades
+    volumes:
+       - './etc-pihole/:/etc/pihole/'
+       - './etc-dnsmasq.d/:/etc/dnsmasq.d/'
+    dns:
+     - 127.0.0.1
+     - 1.1.1.1
+    # Recommended but not required (DHCP needs NET_ADMIN)
+    #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
+    cap_add:
+      - NET_ADMIN
+    restart_policy:
+        condition: unless-stopped
+
+    wireguard:
+        image: linuxserver/wireguard
+        cap_add:
+          - NET_ADMIN
+          - SYS_MODULE
+        environment:
+          - PUID=1000
+          - PGID=1000
+          - TZ=Asia/Singapore
+          - SERVERURL=garrygoh.ddns.net
+          - SERVERPORT=51820
+          - PEERS=1
+          - PEERDNS=10.1.1.10
+          - INTERNAL_SUBNET=10.13.13.0
+        volumes:
+          - /home/pi/wireguard:/config
+          - /lib/modules:/lib/modules
+        ports:
+          - 51820:51820/udp
+        sysctls:
+          - net.ipv4.conf.all.src_valid_mark=1
+        restart_policy:
+            condition: unless-stopped
+
+    visualizer:
+        image: dockersamples/visualizer
+        ports:
+          - "8080:8080"
+        stop_grace_period: 1m30s
+        volumes:
+          - "/var/run/docker.sock:/var/run/docker.sock"
+        deploy:
+          placement:
+            constraints: [node.role == manager]
