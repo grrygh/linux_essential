@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  pihole:
+    image: pihole/pihole
+    hostname: docker-pihole
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "67:67/udp"
+      - "80:80/tcp"
+      - "443:443/tcp"
+    environment:
+      - TZ='Asia/Singapore'
+      - DNS1=1.1.1.1
+      - DNS2=1.0.0.1
+      - FTL_CMD=debug
+      - DNSMASQ_LISTENING=all
+    volumes:
+       - "./etc-pihole/:/etc/pihole/""
+       - "./etc-dnsmasq.d/:/etc/dnsmasq.d/"
+    dns:
+     - 127.0.0.1
+     - 1.1.1.1
