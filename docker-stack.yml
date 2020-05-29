@@ -4,6 +4,9 @@ services:
   pihole:
     image: pihole/pihole
     hostname: docker-pihole
+    deploy:
+      restart_policy:
+        condition: on-failure
     ports:
       - "53:53/tcp"
       - "53:53/udp"
