@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  unifi:
+    image: linuxserver/unifi-controller
+    hostname: docker-unifi
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - MEM_LIMIT=1042M
+    volumes:
+       - "/home/pi/unifi/:/config"
+    ports:
+      - 3478:3478/udp
+      - 10001:10001/udp
+      - 8080:8080
+      - 8081:8081
+      - 8443:8443
+      - 8843:8843
+      - 8880:8880
+      - 6789:6789

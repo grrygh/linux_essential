@@ -5,8 +5,10 @@ services:
     image: pihole/pihole
     hostname: docker-pihole
     deploy:
+      replicas: 1
       restart_policy:
         condition: on-failure
+        max_attempts: 3
     ports:
       - "53:53/tcp"
       - "53:53/udp"
@@ -20,7 +22,7 @@ services:
       - FTL_CMD=debug
       - DNSMASQ_LISTENING=all
     volumes:
-       - "./etc-pihole/:/etc/pihole/""
+       - "./etc-pihole/:/etc/pihole/"
        - "./etc-dnsmasq.d/:/etc/dnsmasq.d/"
     dns:
      - 127.0.0.1
