@@ -1,6 +1,9 @@
 " Keep 100 items in the history.
 set history=100
 
+" Enable mouse visual mode.
+set mouse=v
+
 " Show the cursor position.
 set ruler
 
