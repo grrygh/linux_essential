@@ -19,7 +19,7 @@ spec:
     PersistentVolumeReclaimPolicy: Delete
     StorageClassName: local
     local:
-        path: /path/to/volume/on/host
+        path: /home/ubuntu/pihole/etc
     nodeAffinity:
         required:
             nodeSelectorTerms:
@@ -58,7 +58,7 @@ specs:
     PersistentVolumeReclaimPolicy: Delete
     storageClassName: local
     local:
-        path: /path/to/volume/on/host
+        path: /home/ubuntu/pihole/dnsmasq.d
     nodeAffinity:
         required:
             nodeSelectorTerms:
