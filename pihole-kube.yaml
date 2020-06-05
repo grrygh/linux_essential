@@ -1,145 +1,114 @@
-appVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-    name: local
-provisioner: kubernetes.io/no-provisioner
-volumeBlindingMode: WaitForFirstConsumer
----
-appVersion: v1
-kind: PersistentVolume
-metadata:
-    name: pihole-local-etc-volume
-    labels:
-        director: etc
-spec:
-    capacity:
-        storage: 1Gi
-    accessModes:
-    - ReadWriteOnce
-    PersistentVolumeReclaimPolicy: Delete
-    StorageClassName: local
-    local:
-        path: /home/ubuntu/pihole/etc
-    nodeAffinity:
-        required:
-            nodeSelectorTerms:
-            - matchExpressions:
-                - key: kubernetes.io/hostname
-                operator: In
-                values:
-                - dev2
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-    name: pihole-local-etc-claim
-spec:
-    storageClassName: local
-    accessModes:
-    - ReadWriteOnce
-    resources:
-        requests:
-            storage: 1Gi
-    selector:
-        matchLabels:
-            director: etc
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-    name: pihole-local-dnsmasq-volume
-    labels:
-        directory: dnsmasq.d
-specs:
-    capacity:
-        storage: 1Gi
-    accessModes:
-    - ReadWriteOnce
-    PersistentVolumeReclaimPolicy: Delete
-    storageClassName: local
-    local:
-        path: /home/ubuntu/pihole/dnsmasq.d
-    nodeAffinity:
-        required:
-            nodeSelectorTerms:
-            - matchExpressions:
-                - key: kubernetes.io/hostname
-                operator: In
-                values:
-                - dev2
----
-appVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-    name: pihole-local-dnsmasq-claim
-spec:
-    storageClassName: local
-    accessModes:
-    - ReadWriteOnce
-    resources:
-        requests:
-            storage: 500Mi
-        selector:
-            matchLabels:
-                directory: dnsmasq.d
----
-appVersion: apps/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-    name: pihole
-    labels:
-        apps: pihole
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+    field.cattle.io/creatorId: user-rbr8t
+    field.cattle.io/publicEndpoints: '[{"nodeName":"c-bpvxf:m-69537f4cd0ec","addresses":["192.168.65.3"],"port":53,"protocol":"TCP","podName":"default:pihole-556d99f8d7-lmwml","allNodes":false},{"nodeName":"c-bpvxf:m-69537f4cd0ec","addresses":["192.168.65.3"],"port":53,"protocol":"UDP","podName":"default:pihole-556d99f8d7-lmwml","allNodes":false},{"nodeName":"c-bpvxf:m-69537f4cd0ec","addresses":["192.168.65.3"],"port":8001,"protocol":"TCP","podName":"default:pihole-556d99f8d7-lmwml","allNodes":false}]'
+  creationTimestamp: "2020-06-04T07:26:44Z"
+  generation: 2
+  labels:
+    cattle.io/creator: norman
+    workload.user.cattle.io/workloadselector: deployment-default-pihole
+  name: pihole
+  namespace: default
+  resourceVersion: "2868"
+  selfLink: /apis/apps/v1/namespaces/default/deployments/pihole
+  uid: 26f1677f-1227-49f5-aee8-be40f86e4df6
 spec:
-    replicas: 1
-    selector:
-        matchLabels:
-            app: pihole
-    template:
-        metadata:
-            labels:
-                app: pihole
-                name: pihole
-        spec:
-            containers:
-            - name: pihole
-              image: pihole/pihole:latest
-              imagePullPolicy: Always
-              env:
-              - name: TZ
-                value: "Asia/Singapore"
-              - name: WEBPASSWORD
-                value: "secret"
-              volumeMounts:
-              - name: pihole-local-etc-volume
-                mountPath: "/etc/pihole"
-              - name: pihole-local-dnsmasq-volume
-                mountPath: "/etc/dnsmasq.d"
-        volumes:
-        - name: pihole-local-etc-volume
-          persistentVolumeClaim:
-            claimName: pihole-local-etc-claim
-        - name: pihole-local-dnsmasq-volume
-          persistentVolumeClaim:
-            claimName: pihole-local-dnsmasq-claim
----
-apiVersion: v1
-kind: Service
-metadata:
-    name: pihole
-spec:
-    selector:
-        app: pihole
-    ports:
-    - port: 8000
-      targetPort: 80
-      name: pihole-admin
-    - port: 53
-      targetPort: 53
-      protocol: TCP
-      name: dns-tcp
-    - port: 53
-      targetPort: 53
-      protocol: UDP
-      name: dns-udp
-    externalIPs:
-    - dev2.ip.address
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      workload.user.cattle.io/workloadselector: deployment-default-pihole
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        cattle.io/timestamp: "2020-06-04T07:26:43Z"
+        field.cattle.io/ports: '[[{"containerPort":53,"dnsName":"pihole-hostport","hostPort":53,"kind":"HostPort","name":"dns-tcp","protocol":"TCP","sourcePort":53},{"containerPort":53,"dnsName":"pihole-hostport","hostPort":53,"kind":"HostPort","name":"dns-udp","protocol":"UDP","sourcePort":53},{"containerPort":80,"dnsName":"pihole-hostport","hostPort":8001,"kind":"HostPort","name":"pihole-http","protocol":"TCP","sourcePort":8001}]]'
+      creationTimestamp: null
+      labels:
+        workload.user.cattle.io/workloadselector: deployment-default-pihole
+    spec:
+      containers:
+      - env:
+        - name: DNS1
+          value: 9.9.9.9
+        - name: DNS2
+          value: 1.1.1.1
+        - name: ServerIP
+          value: 10.1.1.148
+        - name: TZ
+          value: Asia/Singapore
+        image: pihole/pihole:latest
+        imagePullPolicy: Always
+        name: pihole
+        ports:
+        - containerPort: 53
+          hostPort: 53
+          name: dns-tcp
+          protocol: TCP
+        - containerPort: 53
+          hostPort: 53
+          name: dns-udp
+          protocol: UDP
+        - containerPort: 80
+          hostPort: 8001
+          name: pihole-http
+          protocol: TCP
+        resources: {}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities: {}
+          privileged: false
+          readOnlyRootFilesystem: false
+          runAsNonRoot: false
+        stdin: true
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        tty: true
+        volumeMounts:
+        - mountPath: /etc/pihole/
+          name: pihole-etc
+        - mountPath: /etc/dnsmasq.d/
+          name: pihole-dnsmasq
+      dnsConfig:
+        nameservers:
+        - 127.0.0.1
+        - 9.9.9.9
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - hostPath:
+          path: /home/ubuntu/pihole/etc-pihole/
+          type: ""
+        name: pihole-etc
+      - hostPath:
+          path: /home/ubuntupihole/etc-dnsmasq.d/
+          type: ""
+        name: pihole-dnsmasq
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2020-06-04T07:29:00Z"
+    lastUpdateTime: "2020-06-04T07:29:00Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  - lastTransitionTime: "2020-06-04T07:26:44Z"
+    lastUpdateTime: "2020-06-04T07:29:00Z"
+    message: ReplicaSet "pihole-556d99f8d7" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  observedGeneration: 2
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1
