@@ -87,11 +87,11 @@ spec:
       terminationGracePeriodSeconds: 30
       volumes:
       - hostPath:
-          path: /Users/garrygoh/Downloads/pihole/etc-pihole/
+          path: /home/pi/pihole/etc-pihole/
           type: ""
         name: pihole-etc
       - hostPath:
-          path: /Users/garrygoh/Downloads/pihole/etc-dnsmasq.d/
+          path: /home/pi/pihole/etc-dnsmasq.d/
           type: ""
         name: pihole-dnsmasq
 status:
