@@ -27,7 +27,7 @@ do
   esac
 done
 
-# Check for options.
+# Check for options, if no option indicated, goto function usage()
 if [[ "${#}" -eq 0 ]]
 then
   usage >&2
