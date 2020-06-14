@@ -87,7 +87,7 @@ then
 fi
 
 # Install pihole docker.
-if [[ "${PIHOLE}" -eq 'true' ]]
+if [[ "${PIHOLE}" = 'true' ]]
 then
   # Check for pihole container.
   docker container ls | grep pihole &> /dev/null
@@ -107,7 +107,7 @@ then
 fi
 
 # Install wireguard docker.
-if [[ "${WIREGUARD}" -eq 'true' ]]
+if [[ "${WIREGUARD}" = 'true' ]]
 then
   # Check for wireguard container.
   docker container ls | grep wireguard &> /dev/null
