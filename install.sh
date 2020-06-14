@@ -62,7 +62,6 @@ then
   fi
   wget https://raw.githubusercontent.com/grrygh/linux_essential/master/.vimrc -P ~/
 fi
-exit 0
 
 # Install Docker application.
 if [[ "${DOCKER}" = 'true' ]]
@@ -83,9 +82,9 @@ then
     sudo pip3 install docker-compose
   else
     echo 'Docker is already installed.'
+    exit 1
   fi
 fi
-exit 0
 
 # Install pihole docker.
 if [[ "${PIHOLE}" -eq 'true' ]]
@@ -106,7 +105,6 @@ then
     exit 1
   fi
 fi
-exit 0
 
 # Install wireguard docker.
 if [[ "${WIREGUARD}" -eq 'true' ]]
