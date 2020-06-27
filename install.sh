@@ -12,7 +12,7 @@ usage() {
   echo '  -d  Install Docker application.'
   echo '  -p  Install pihole docker.'
   echo '  -w  Install wireguard docker.'
-  echo '*If curling from github, add | bash -s -- [-vdpw]'
+  echo '*If curling from github, add | bash -s -- [-lvdpw]'
   exit 1
 }
 
