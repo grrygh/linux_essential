@@ -5,22 +5,24 @@
 usage() {
   # Display the usage and exit.
   echo
-  echo "Usage: ${0} [-vdpw]"
+  echo "Usage: ${0} [-lmvdpw]"
   echo 'Linux essential installation'
   echo '  -l  Setup Localisation.'
+  echo '  -m  Install Mosh server.'
   echo '  -v  Install VIM application & setup .vimrc'
   echo '  -d  Install Docker application.'
   echo '  -p  Install pihole docker.'
   echo '  -w  Install wireguard docker.'
-  echo '*If curling from github, add | bash -s -- [-lvdpw]'
+  echo '*If curling from github, add | bash -s -- [-lmvdpw]'
   exit 1
 }
 
 # Parse the options
-while getopts lvdpw OPTION
+while getopts lmvdpw OPTION
 do
   case ${OPTION} in
     l) LOCALE='true' ;;
+    m) MOSH='true' ;;
     v) VIM='true' ;;
     d) DOCKER='true' ;;
     p) PIHOLE='true' ;;
@@ -42,6 +44,21 @@ perl -pi -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g' /etc/locale.gen
 sudo locale-gen en_US.UTF-8
 sudo update-locale en_US.UTF-8
 sudo timedatectl set-timezone Asia/Singapore
+fi
+
+# Install Mosh server.
+if [[ "${MOSH}" = 'true' ]]
+then
+  which most # Check if Mosh server is installed.
+  if [[ $? -ne 0 ]] # If Mosh is not installed.
+  then
+    echo 'Installing Mosh Server...'
+    sudo apt update && sudo apt upgrade
+    sudo apt install -y mosh
+  else # If Mosh server is installed, check for update.
+    echo 'Check for Mosh server update...'
+    sudo apt update && sudo apt install --only-upgrade mosh
+    fi
 fi
 
 # Install VIM application & setup .vimrc
