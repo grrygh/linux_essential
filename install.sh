@@ -7,6 +7,7 @@ usage() {
   echo
   echo "Usage: ${0} [-vdpw]"
   echo 'Linux essential installation'
+  echo '  -l  Setup Localisation.'
   echo '  -v  Install VIM application & setup .vimrc'
   echo '  -d  Install Docker application.'
   echo '  -p  Install pihole docker.'
@@ -16,9 +17,10 @@ usage() {
 }
 
 # Parse the options
-while getopts vdpw OPTION
+while getopts lvdpw OPTION
 do
   case ${OPTION} in
+    l) LOCALE='true' ;;
     v) VIM='true' ;;
     d) DOCKER='true' ;;
     p) PIHOLE='true' ;;
@@ -31,6 +33,12 @@ done
 if [[ "${#}" -eq 0 ]]
 then
   usage >&2
+fi
+
+# Setup localisation
+if [[ "${LOCALE}" = 'true' ]]
+then
+
 fi
 
 # Install VIM application & setup .vimrc
