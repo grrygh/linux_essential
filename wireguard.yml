@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   wireguard:
-    image: linuxserver/wireguard
+    image: lsiodev/wireguard
     container_name: wireguard
     cap_add:
       - NET_ADMIN
@@ -13,7 +13,7 @@ services:
       - TZ=Asia/Singapore
       - SERVERURL=garrygoh.ddns.net
       - SERVERPORT=51820
-      - PEERS=1
+      - PEERS=2
       - PEERDNS=10.1.1.10
       - INTERNAL_SUBNET=10.13.13.0
     volumes:
