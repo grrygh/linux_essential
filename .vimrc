@@ -1,5 +1,5 @@
 " Keep 100 items in the history.
-set history=100
+set history=1000
 
 " Enable mouse visual mode.
 set mouse=v
