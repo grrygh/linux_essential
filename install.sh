@@ -19,7 +19,7 @@ usage() {
 }
 
 # Parse the options
-while getopts lmvdpw OPTION
+while getopts lmvdpws OPTION
 do
   case ${OPTION} in
     l) LOCALE='true' ;;
