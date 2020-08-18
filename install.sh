@@ -5,7 +5,7 @@
 usage() {
   # Display the usage and exit.
   echo
-  echo "Usage: ${0} [-lmvdpw]"
+  echo "Usage: ${0} [-lmvdpws]"
   echo 'Linux essential installation'
   echo '  -l  Setup Localisation.'
   echo '  -m  Install Mosh server.'
@@ -13,6 +13,7 @@ usage() {
   echo '  -d  Install Docker application.'
   echo '  -p  Install pihole docker.'
   echo '  -w  Install wireguard docker.'
+  echo '  -s  Install squid docker.'
   echo '*If curling from github, add | bash -s -- [-lmvdpw]'
   exit 1
 }
@@ -27,6 +28,7 @@ do
     d) DOCKER='true' ;;
     p) PIHOLE='true' ;;
     w) WIREGUARD='true' ;;
+    s) SQUID='true' ;;
     ?) usage ;;
   esac
 done
@@ -152,4 +154,24 @@ then
     exit 1
   fi
 fi
+
+# Install squid docker.
+if [[ "${SQUID}" = 'true' ]]
+then
+  # Check for squid container.
+  docker container ls | grep squid &> /dev/null
+  if [[ $? -ne 0 ]] # If container is missing.
+  then
+    ls ~/squid.yml &> /dev/null # Check for squid.yml file.
+    if [[ $? -ne 0 ]] # If squid.yml is missing.
+    then
+      wget https://raw.githubusercontent.com/grrygh/linux_essential/master/squid.yml -P ~/
+      docker-compose -f squid.yml up -d squid # Start wireguard container.
+    fi
+  else
+    echo 'squid container is implemented.'
+    exit 1
+  fi
+fi
+
 exit 0
