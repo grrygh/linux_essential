@@ -6,6 +6,7 @@ services:
     container_name: pihole
     image: pihole/pihole:latest
     hostname: docker-pihole
+    shm_size: '2gb'
     ports:
       - "53:53/tcp"
       - "53:53/udp"
