@@ -5,7 +5,7 @@
 usage() {
   # Display the usage and exit.
   echo
-  echo "Usage: ${0} [-lmvdpws]"
+  echo "Usage: ${0} [-lmvdpwsn]"
   echo 'Linux essential installation'
   echo '  -l  Setup Localisation.'
   echo '  -m  Install Mosh server.'
@@ -14,7 +14,8 @@ usage() {
   echo '  -p  Install pihole docker.'
   echo '  -w  Install wireguard docker.'
   echo '  -s  Install squid docker.'
-  echo '*If curling from github, add | bash -s -- [-lmvdpw]'
+  echo '  -n  Install neofetch
+  echo '*If curling from github, add | bash -s -- [-lmvdpwsn]'
   exit 1
 }
 
@@ -29,6 +30,7 @@ do
     p) PIHOLE='true' ;;
     w) WIREGUARD='true' ;;
     s) SQUID='true' ;;
+    n) NEOFETCH='true' ;;
     ?) usage ;;
   esac
 done
@@ -173,5 +175,20 @@ then
     exit 1
   fi
 fi
+
+# Install neofetch
+if [[ "${NEOFETCH}" = 'true' ]]
+then
+  which neofetch # Check if neofetch is installed.
+  if [[ $? -ne 0 ]] # If neofetch is not installed.
+  then
+    echo 'Installing Neofetch...'
+    sudo apt update && sudo apt upgrade
+    sudo apt install -y neofetch
+  else # If Neofetch is installed, check for update.
+    echo 'Check for Neofetch update...'
+    sudo apt update && sudo apt install --only-upgrade neofetch
+    fi
+fi 
 
 exit 0
