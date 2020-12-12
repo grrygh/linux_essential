@@ -14,7 +14,7 @@ usage() {
   echo '  -p  Install pihole docker.'
   echo '  -w  Install wireguard docker.'
   echo '  -s  Install squid docker.'
-  echo '  -n  Install neofetch
+  echo '  -n  Install neofetch'
   echo '*If curling from github, add | bash -s -- [-lmvdpwsn]'
   exit 1
 }
