@@ -42,12 +42,26 @@ then
 fi
 
 # Setup localisation
+<<'###BLOCK-COMMENT'
 if [[ "${LOCALE}" = 'true' ]]
 then
 perl -pi -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g' /etc/locale.gen
 sudo locale-gen en_US.UTF-8
 sudo update-locale en_US.UTF-8
 sudo timedatectl set-timezone Asia/Singapore
+fi
+###BLOCK-COMMENT
+
+if [[ "${LOCALE}" = 'true' ]]
+then
+
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US.UTF-8
+echo 'export LC_ALL=en_US.UTF-8' >> ~/.bashrc
+echo 'export LANG=en_US.UTF-8' >> ~/.bashrc
+echo 'export LANGUAGE=en_US.UTF-8' >> ~/.bashrc
+
 fi
 
 # Install Mosh server.
