@@ -30,6 +30,7 @@ fi
 
 # Step 3: Hold docker-buildx package to prevent conflicts
 echo "✋ Holding docker-buildx to avoid plugin conflicts..."
+#sudo apt-mark hold docker-buildx || true
 sudo apt-mark hold docker-buildx || true
 
 # Step 4: Update APT sources to Debian 13 (Trixie)
