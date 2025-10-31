@@ -25,7 +25,7 @@ sudo apt autoremove --purge -y
 # Step 2: Remove conflicting Docker Compose
 if dpkg -l | grep -q docker-compose; then
     echo "🧹 Removing legacy docker-compose..."
-    apt remove docker-compose -y
+    sudo apt remove docker-compose -y
 fi
 
 # Step 3: Hold docker-buildx package to prevent conflicts
@@ -40,7 +40,7 @@ sudo sed -i 's/bookworm/trixie/g' /etc/apt/sources.list
 DOCKER_LIST="/etc/apt/sources.list.d/docker.list"
 if [[ -f "$DOCKER_LIST" ]]; then
     echo "🔧 Updating Docker repo to trixie..."
-    sed -i 's/bookworm/trixie/g' "$DOCKER_LIST"
+    sudo sed -i 's/bookworm/trixie/g' "$DOCKER_LIST"
 fi
 
 # Step 5: Update package index and upgrade
@@ -54,7 +54,7 @@ sudo apt full-upgrade -y
 # Step 6: Reinstall Docker Compose plugin if missing
 if ! docker compose version >/dev/null 2>&1; then
     echo "🐳 Installing docker-compose-plugin..."
-    apt install docker-compose-plugin -y
+    sudo apt install docker-compose-plugin -y
 fi
 
 # Step 7: Cleanup
