@@ -26,6 +26,7 @@ sudo apt autoremove --purge -y
 if dpkg -l | grep -q docker-compose; then
     echo "🧹 Removing legacy docker-compose..."
     sudo apt remove docker-compose -y
+    sudo apt remove -y docker-buildx -y
 fi
 
 # Step 3: Hold docker-buildx package to prevent conflicts
