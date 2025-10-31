@@ -26,7 +26,7 @@ sudo apt autoremove --purge -y
 if dpkg -l | grep -q docker-compose; then
     echo "🧹 Removing legacy docker-compose..."
     sudo apt remove docker-compose -y
-    sudo apt remove -y docker-buildx -y
+    sudo apt remove -y docker-buildx-plugin -y
 fi
 
 # Step 3: Hold docker-buildx package to prevent conflicts
@@ -42,7 +42,13 @@ sudo sed -i 's/bookworm/trixie/g' /etc/apt/sources.list
 DOCKER_LIST="/etc/apt/sources.list.d/docker.list"
 if [[ -f "$DOCKER_LIST" ]]; then
     echo "🔧 Updating Docker repo to trixie..."
-    sudo sed -i 's/bookworm/trixie/g' "$DOCKER_LIST"
+    if grep -q "bookworm" "$DOCKER_LIST"; then
+        sudo sed -i 's/bookworm/trixie/g' "$DOCKER_LIST"
+    elif grep -q "stable" "$DOCKER_LIST"; then
+        sudo sed -i 's|stable|trixie|g' "$DOCKER_LIST"
+    elif ! grep -q "trixie" "$DOCKER_LIST"; then
+        echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian trixie stable" | sudo tee "$DOCKER_LIST" >/dev/null
+    fi
 fi
 
 # Step 5: Update package index and upgrade
