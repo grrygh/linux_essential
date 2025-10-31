@@ -17,10 +17,10 @@ fi
 
 # Step 1: Update current Debian 12 system
 echo "🔄 Updating current Debian 12 system..."
-apt update
-apt upgrade -y
-apt full-upgrade -y
-apt autoremove --purge -y
+sudo apt update
+sudo apt upgrade -y
+sudo apt full-upgrade -y
+sudo apt autoremove --purge -y
 
 # Step 2: Remove conflicting Docker Compose
 if dpkg -l | grep -q docker-compose; then
@@ -30,11 +30,11 @@ fi
 
 # Step 3: Hold docker-buildx package to prevent conflicts
 echo "✋ Holding docker-buildx to avoid plugin conflicts..."
-apt-mark hold docker-buildx || true
+sudo apt-mark hold docker-buildx || true
 
 # Step 4: Update APT sources to Debian 13 (Trixie)
 echo "📦 Updating APT sources to Debian 13 (trixie)..."
-sed -i 's/bookworm/trixie/g' /etc/apt/sources.list
+sudo sed -i 's/bookworm/trixie/g' /etc/apt/sources.list
 
 # Update Docker repo if exists
 DOCKER_LIST="/etc/apt/sources.list.d/docker.list"
@@ -45,11 +45,11 @@ fi
 
 # Step 5: Update package index and upgrade
 echo "🔄 Updating package index..."
-apt update
+sudo apt update
 
 echo "⚡ Upgrading packages..."
-apt upgrade --without-new-pkgs -y
-apt full-upgrade -y
+sudo apt upgrade --without-new-pkgs -y
+sudo apt full-upgrade -y
 
 # Step 6: Reinstall Docker Compose plugin if missing
 if ! docker compose version >/dev/null 2>&1; then
@@ -59,8 +59,8 @@ fi
 
 # Step 7: Cleanup
 echo "🧹 Cleaning up..."
-apt autoremove --purge -y
-apt clean
+sudo apt autoremove --purge -y
+sudo apt clean
 
 # Step 8: Verify
 echo "✅ Upgrade complete. Verifying..."
